@@ -1,0 +1,40 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SkHttpClient.View"
+             xmlns:loc="clr-namespace:SkHttpClient"
+             xmlns:ViewModel="clr-namespace:SkHttpClient.ViewModel" x:Class="SkHttpClient.View.GetView"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <loc:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <ViewModel:GetSkViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown" />
+        <Button Grid.Row="0" Grid.Column="1" Content="Navigate" Command="{Binding Navigate}" />
+
+        <Label Grid.Row="1" Grid.Column="0" Content="{Binding Status}"/>
+
+        <WebBrowser Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" loc:BrowserBehavior.Html="{Binding Html}" Navigated="WebBrowser_Navigated"/>
+        <ProgressBar Grid.Row="3" Grid.Column="0" IsIndeterminate="{Binding IsBusy}" Height="20"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ProgressValue, StringFormat=Received :\{0:D\} KB}" Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,47 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SkHttpClient.View"
+             xmlns:loc="clr-namespace:SkHttpClient"
+             xmlns:ViewModel="clr-namespace:SkHttpClient.ViewModel" x:Class="SkHttpClient.View.PutView"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.DataContext>
+        <ViewModel:PutSkViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" KeyDown="TextBox_KeyDown" />
+        <Button Grid.Row="0" Grid.Column="1" Content="Navigate" Command="{Binding Navigate}" />
+
+        <Label Grid.Row="1" Grid.Column="0" Content="{Binding Status}"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Label>Plik</Label>
+            <TextBox Text="{Binding Filename}" Width="200"/>
+            <Label Content="{Binding Content.Length, Mode=OneWay, StringFormat=\{0:D\} bajtów}" />
+            <Button Content="Przeglądaj" Command="{Binding Browse}"/>
+        </StackPanel>
+        <ListView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Headers}" />
+        <WebBrowser  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" loc:BrowserBehavior.Html="{Binding Html}" />
+        <ProgressBar Grid.Row="6" Grid.Column="0" IsIndeterminate="{Binding IsBusy}" Height="20"/>
+
+    </Grid>
+</UserControl>
